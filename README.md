@@ -1,6 +1,6 @@
 # WebService TP
 * Setup your database in the .env file
-* Use "composer install" to install all dependencies
+* Use ```$composer install``` to install all dependencies
 * Run your local server with : 
 ``` $php -S 127.0.0.1:8000 -t public ```
  OR
