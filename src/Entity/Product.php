@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -48,6 +50,16 @@ class Product
      * @ORM\JoinColumn(nullable=false)
      */
     private $category;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\ProductCart", mappedBy="product")
+     */
+    private $productCart;
+
+    public function __construct()
+    {
+        $this->productCart = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -124,5 +136,35 @@ class Product
         $this->picture = $picture;
 
         return $this;
+    }
+
+    public function getProductCart(): Collection
+    {
+        return $this->productCart;
+    }
+
+    public function addProductCart(ProductCart $productCart): self
+    {
+        if(!$this->productCart->contains($productCart)){
+            $this->productCart[] = $productCart;
+            $productCart->setProduct($this);
+        }
+        return $this;
+    }
+
+    public function removeProductCart(ProductCart $productCart): self
+    {
+        if($this->productCart->contains($productCart)){
+            $this->productCart->removeElement($productCart);
+            if($productCart->getProduct() === $this){
+                $productCart->setProduct(null);
+            }
+        }
+        return $this;
+    }
+
+    public function __toString()
+    {
+        return $this->name;
     }
 }
