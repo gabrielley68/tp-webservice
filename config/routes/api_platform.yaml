@@ -2,3 +2,9 @@ api_platform:
     resource: .
     type: api_platform
     prefix: /api
+
+validate_panier:
+  path: /api/carts/{cartId}/validate
+  controller: App\Controller\CartController::validate
+  requirements:
+    cartId: '\d+'

@@ -6,6 +6,8 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ApiResource()
@@ -22,6 +24,7 @@ class Product
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"category"})
      */
     private $name;
 
@@ -32,10 +35,15 @@ class Product
 
     /**
      * @ORM\Column(type="decimal", precision=6, scale=2)
+     * @Groups({"category"})
      */
     private $price;
 
     /**
+     * @Assert\NotBlank
+     * @Assert\GreaterThan(
+     *     value=0
+     * )
      * @ORM\Column(type="integer")
      */
     private $stock;
@@ -46,6 +54,7 @@ class Product
     private $picture;
 
     /**
+     * @Assert\NotBlank
      * @ORM\ManyToOne(targetEntity="App\Entity\Category", inversedBy="products")
      * @ORM\JoinColumn(nullable=false)
      */

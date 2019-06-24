@@ -31,6 +31,11 @@ class Cart
      */
     private $productCart;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $bought = false;
+
     public function __construct()
     {
         $this->productCart = new ArrayCollection();
@@ -76,6 +81,22 @@ class Cart
             }
         }
         return $this;
+    }
+
+    public function getProducts(){
+        foreach($this->productCart as $productCart){
+            yield $productCart->getProduct();
+        }
+    }
+
+    public function getBought()
+    {
+        return $this->bought;
+    }
+
+    public function setBought($bought): void
+    {
+        $this->bought = $bought;
     }
 
     public function __toString()
