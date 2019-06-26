@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
+use App\Annotations\CountryAware;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -12,6 +13,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * @ApiResource()
  * @ORM\Entity(repositoryClass="App\Repository\ProductRepository")
+ * @CountryAware(countryFieldName="country")
  */
 class Product
 {
@@ -64,6 +66,12 @@ class Product
      * @ORM\OneToMany(targetEntity="App\Entity\ProductCart", mappedBy="product")
      */
     private $productCart;
+
+    /**
+     * @ORM\Column(type="string")
+     */
+    private $country = "fr";
+
 
     public function __construct()
     {
@@ -170,6 +178,16 @@ class Product
             }
         }
         return $this;
+    }
+
+    public function getCountry()
+    {
+        return $this->country;
+    }
+
+    public function setCountry($country): void
+    {
+        $this->country = $country;
     }
 
     public function __toString()

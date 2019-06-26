@@ -1,3 +1,10 @@
 api_platform:
     mapping:
         paths: ['%kernel.project_dir%/src/Entity']
+
+doctrine:
+  orm:
+    filters:
+      country_filter:
+        class: App\Filter\CountryFilter
+

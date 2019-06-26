@@ -53,6 +53,11 @@ class User implements UserInterface
      */
     private $isAdmin = false;
 
+    /**
+     * @ORM\Column(type="string")
+     */
+    private $country = 'fr';
+
 
     public function __construct($username)
     {
@@ -131,6 +136,16 @@ class User implements UserInterface
             }
         }
         return $this;
+    }
+
+    public function getCountry()
+    {
+        return $this->country;
+    }
+
+    public function setCountry($country): void
+    {
+        $this->country = $country;
     }
 
     public function __toString()
